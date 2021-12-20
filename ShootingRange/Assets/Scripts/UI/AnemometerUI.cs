@@ -9,6 +9,7 @@ public class AnemometerUI : MonoBehaviour
     [SerializeField] Slider slider;
 
     private Transform player;
+    private float maxRangeForSlider = 100; // km/h
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,6 @@ public class AnemometerUI : MonoBehaviour
     {
         Vector2 playerVector = new Vector2(player.right.x, player.right.z);
         float windProjection = Vector2.Dot(playerVector, windManager.GetWind());
-        slider.value = windProjection / (windManager.GetWindPeakMagnitude() * 2) + 0.5F; // take a look a this formula
+        slider.value = windProjection / (maxRangeForSlider * 2) + 0.5F;
     }
 }
