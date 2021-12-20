@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class WeaponManager : MonoBehaviour
 {
     private ControlPanelUI controlPanelUI;
@@ -36,10 +35,6 @@ public class WeaponManager : MonoBehaviour
     {
         InitializeWeaponData();
         // PrintWeaponData();
-        // print($"ShadowArea: {FormulaBallistics.ShadowArrea(diameter * 0.001f)}");
-        // print($"ForceOnProjectilefloor: {FormulaBallistics.ForceOnProjectilefloor(diameter * 0.001f, gasPressure * 100000)} Newton");
-        // print($"BulletAcceleration: {FormulaBallistics.BulletAcceleration(diameter * 0.001f, gasPressure * 100000, mass * 0.001f)}");
-        // print($"MuzzleVelocity: {FormulaBallistics.MuzzleVelocity(diameter * 0.001f, gasPressure * 100000, mass * 0.001f, barrelLength)}");
     }
     void Start()
     {
@@ -56,7 +51,6 @@ public class WeaponManager : MonoBehaviour
         }
         Reload();
     }
-
 
     private void Shoot()
     {
@@ -81,7 +75,6 @@ public class WeaponManager : MonoBehaviour
             
             isRealoading = true;
         }
-
         if (isRealoading)
         {
             reloadTimer -= Time.deltaTime;
@@ -110,12 +103,9 @@ public class WeaponManager : MonoBehaviour
 
         maxScopeZoom = weaponData.MaxScopeZoom;
 
-        print($"Ammotype: {weaponData.Ammonation.Caliber}");
         bulletDiameter = weaponData.Ammonation.Caliber;
         bulletMass = weaponData.Ammonation.ProjectileMassInGram;
         weaponMuzzleVelocity = FormulaBallistics.MuzzleVelocity(bulletDiameter * 0.001f, weaponGasPressure * 100000, bulletMass * 0.001f, weaponBarrelLength);
-        // gas pressure
-        // barrel length
     }
 
     public int GetWeaponMaxScopeZoom ()

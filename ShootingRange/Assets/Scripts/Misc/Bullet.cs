@@ -75,7 +75,7 @@ public class Bullet : MonoBehaviour
 
     private bool HitSomethingBetweenPoint(Vector3 startPoint, Vector3 endPoint, out RaycastHit hit)
     {
-        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).sqrMagnitude); // magnitude
+        return Physics.Raycast(startPoint, endPoint - startPoint, out hit, (endPoint - startPoint).sqrMagnitude);
     }
 
     private void OnHit(RaycastHit hit)

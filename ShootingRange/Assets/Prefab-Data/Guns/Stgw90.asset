@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd85823fb1b671a4ba763c8456afed2b, type: 3}
-  m_Name: Frontloader
+  m_Name: Stgw90
   m_EditorClassIdentifier: 
-  WeaponName: Frontloader
+  WeaponName: Stgw90
   Damage: 100
   BarrelLength: 0.538
   GasPressure: 1300

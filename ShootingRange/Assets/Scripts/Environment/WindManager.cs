@@ -13,18 +13,17 @@ public class WindManager : MonoBehaviour
 
     [SerializeField] TMP_InputField windPeakMagnitudeInputField = null;
     
-
     private Vector2 wind;
 
     private Vector2 windUpdated;
     private float time;
+
     // Start is called before the first frame update
     void Start()
     {
         controlPanelUI = ControlPanelUI.Instance;
         controlPanelUI.UpdateWindUI(windPeakMagnitude);
         SetWind(Random.insideUnitCircle * windPeakMagnitude);
-        // windPeakMagnitudeInputField.text = windPeakMagnitude.ToString();
     }
 
     // Update is called once per frame

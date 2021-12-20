@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveDirection = Vector3.zero;
 
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -26,12 +25,6 @@ public class PlayerController : MonoBehaviour
         {
             _instance = this;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     // Update is called once per frame
