@@ -10,9 +10,9 @@ public class ControlPanelUI : MonoBehaviour
     public static ControlPanelUI Instance { get { return _instance; } }
 
 
-    [SerializeField] GameObject windControlPanel = null;
-    [SerializeField] GameObject ballisticsControlPanel = null;
-    [SerializeField] GameObject weaponControlPanel = null;
+    [SerializeField] private GameObject windControlPanel = null;
+    [SerializeField] private GameObject ballisticsControlPanel = null;
+    [SerializeField] private GameObject weaponControlPanel = null;
     private bool isControlPanelActive = false;
 
     [SerializeField] TMP_InputField windPeakMagnitudeInputField = null;
@@ -23,8 +23,13 @@ public class ControlPanelUI : MonoBehaviour
     [SerializeField] private TMP_InputField gasPressureInputField = null; // bar
 
     [SerializeField] private TMP_Text magazineTextField = null;
-    [SerializeField] private TMP_Text showTargetHitTangeTextField = null;
+    [SerializeField] private TMP_Text reloadTextField = null;
 
+    [SerializeField] private TMP_Text showTargetHitRangeTextField = null;
+    [SerializeField] private TMP_Text showTargetHorizontalImpactTextField = null;
+    [SerializeField] private TMP_Text showTargetVecrticalImpactTextField = null;
+
+    [SerializeField] private GameObject closeButton = null;
 
 
 
@@ -44,7 +49,6 @@ public class ControlPanelUI : MonoBehaviour
     void Start()
     {
         ChangePanelsState(isControlPanelActive);
-        
     }
 
     // Update is called once per frame
@@ -62,6 +66,49 @@ public class ControlPanelUI : MonoBehaviour
         windControlPanel.SetActive(state);
         ballisticsControlPanel.SetActive(state);
         weaponControlPanel.SetActive(state);
+        closeButton.SetActive(state);
+    }
+
+    private float CheckIfValidInput(float value)
+    {
+        if (value < 0)
+        {
+            value = 0;
+        }
+        return value;
+    }
+
+    private string TraslateImpactPosition(float impactValue, bool isHorizontalValue)
+    {
+        string direction = "";
+        if (impactValue < 0.1f && impactValue > -0.1f)
+        {
+            return "Center";
+        }
+        else if (impactValue < -0.1f)
+        {
+            if (isHorizontalValue)
+            {
+                direction = "Right";
+            }
+            else
+            {
+                direction = "Top";
+            }
+            return $"{direction} {(impactValue * -1).ToString("N3")}"; // Top || Right
+        }
+        else
+        {
+            if (isHorizontalValue)
+            {
+                direction = "Left";
+            }
+            else
+            {
+                direction = "Bottom";
+            }
+            return $"{direction} {(impactValue).ToString("N3")}"; // Bottom || Left
+        }
     }
 
     public bool CheckIfControlPanelIsActive()
@@ -71,15 +118,15 @@ public class ControlPanelUI : MonoBehaviour
 
     public void UpdateWindUI(float windPeakMagnitude)
     {
-        windPeakMagnitudeInputField.text = windPeakMagnitude.ToString();
+        windPeakMagnitudeInputField.text = CheckIfValidInput(windPeakMagnitude).ToString();
     }
 
     public void UpdateBallisticsUI(float bulletDiameter, float bulletMass, float gunBarrelLength, float gunGasPressure)
     {
-        diameterInputField.text = bulletDiameter.ToString();
-        massInputField.text = bulletMass.ToString();
-        barrelLengthInputField.text = gunBarrelLength.ToString();
-        gasPressureInputField.text = gunGasPressure.ToString();
+        diameterInputField.text = CheckIfValidInput(bulletDiameter).ToString();
+        massInputField.text = CheckIfValidInput(bulletMass).ToString();
+        barrelLengthInputField.text = CheckIfValidInput(gunBarrelLength).ToString();
+        gasPressureInputField.text = CheckIfValidInput(gunGasPressure).ToString();
     }
 
     public void UpdateMagazineText(int bulletsInMagazine, int magazineCapacity)
@@ -89,7 +136,12 @@ public class ControlPanelUI : MonoBehaviour
 
     public void ShowTargteHitRange(float range)
     {
-        showTargetHitTangeTextField.text = $"Range: {range.ToString("N3")} m";
+        showTargetHitRangeTextField.text = $"Range: {range.ToString("N3")} m";
+    }
+
+    public void ShowReloadTimer(string content)
+    {
+        reloadTextField.text = content;
     }
 
     public float GetWindPeakMagnitudeFromUI()
@@ -120,5 +172,16 @@ public class ControlPanelUI : MonoBehaviour
     public bool GetControlPanelState()
     {
         return isControlPanelActive;
+    }
+
+    public void CloseApplication()
+    {
+        Application.Quit();
+    }
+
+    public void SetImpactPosition(Vector3 impactPosition)
+    {
+        showTargetHorizontalImpactTextField.text = $"H: {TraslateImpactPosition(impactPosition.x, true)}";
+        showTargetVecrticalImpactTextField.text = $"V: {TraslateImpactPosition(impactPosition.y, false)}";
     }
 }

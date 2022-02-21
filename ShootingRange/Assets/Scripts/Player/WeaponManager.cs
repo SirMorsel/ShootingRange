@@ -72,16 +72,15 @@ public class WeaponManager : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.R) && currentAmountOfBulletsInMagazine < weaponMagazineCapacity) || (currentAmountOfBulletsInMagazine <= 0))
         {
-            
             isRealoading = true;
         }
         if (isRealoading)
         {
             reloadTimer -= Time.deltaTime;
-            print($"Reloading complete in: {Mathf.RoundToInt(reloadTimer)}");
+            controlPanelUI.ShowReloadTimer($"Reloading {Mathf.RoundToInt(reloadTimer)}");
             if (reloadTimer <= 0)
             {
-                print("Reload complete!");
+                controlPanelUI.ShowReloadTimer("");
                 isRealoading = false;
                 reloadTimer = weaponReloadTime;
                 currentAmountOfBulletsInMagazine = weaponMagazineCapacity;
@@ -126,6 +125,8 @@ public class WeaponManager : MonoBehaviour
         weaponBarrelLength = controlPanelUI.GetGunBarrelLengthFromUI();
         weaponGasPressure = controlPanelUI.GetGunGasPressureFromUI();
         weaponMuzzleVelocity = FormulaBallistics.MuzzleVelocity(bulletDiameter * 0.001f, weaponGasPressure * 100000, bulletMass * 0.001f, weaponBarrelLength);
+
+        controlPanelUI.UpdateBallisticsUI(bulletDiameter, bulletMass, weaponBarrelLength, weaponGasPressure);
     }
 
     public void ChangeCheatModeState()

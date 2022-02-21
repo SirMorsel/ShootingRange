@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private ControlPanelUI controlPanelUI;
 
     private float bulletSpeed;
     private float gravityOnBullet;
@@ -13,6 +14,11 @@ public class Bullet : MonoBehaviour
 
     private bool isInitialized = false;
     private float startTime = -1;
+
+    private void Start()
+    {
+        controlPanelUI = ControlPanelUI.Instance;
+    }
 
     private void FixedUpdate()
     {
@@ -68,7 +74,7 @@ public class Bullet : MonoBehaviour
     private Vector3 FindPointOnParable(float time)
     {
         Vector3 movementVector = (startForward * bulletSpeed * time);
-        Vector3 windVector = new Vector3(windOnBullet.x, 0, windOnBullet.y) * time * time;
+        Vector3 windVector = new Vector3(windOnBullet.x, 0, windOnBullet.y) * time * time * 0.5f;
         Vector3 gravityVector = Vector3.down * gravityOnBullet * time * time;
         return startPosition + movementVector + gravityVector + windVector;
     }
@@ -84,6 +90,7 @@ public class Bullet : MonoBehaviour
         if (bulletImpact)
         {
             bulletImpact.OnHit(hit);
+            controlPanelUI.SetImpactPosition(transform.InverseTransformPoint(hit.transform.position));
         }
         Destroy(gameObject);
     }

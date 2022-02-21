@@ -7,6 +7,7 @@ using TMPro;
 public class WindManager : MonoBehaviour
 {
     private ControlPanelUI controlPanelUI;
+
     [SerializeField] private float windDelta;
     [SerializeField] private float windUpdateTime;
     [SerializeField] private float windPeakMagnitude;
@@ -67,12 +68,13 @@ public class WindManager : MonoBehaviour
         wind = newWindData;
         windUpdated = wind;
         time = 0F;
-
     }
 
     public void OverrideCurrentWindData()
     {
         windPeakMagnitude = controlPanelUI.GetWindPeakMagnitudeFromUI();
         SetWind(Random.insideUnitCircle * windPeakMagnitude);
+
+        controlPanelUI.UpdateWindUI(windPeakMagnitude);
     }
 }

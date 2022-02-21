@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnvironmentImpact : BulletImpact
 {
+    private PlayerController playerController;
+    private ControlPanelUI controlPanelUI;
+
     [SerializeField] private GameObject particlesPrefab;
     [SerializeField] private bool isSpecialTarget = false;
     [SerializeField] private bool useObjectColorForImpact = false;
     [SerializeField] private Color defaultColor = Color.black;
-
-    private PlayerController playerController;
-    private ControlPanelUI controlPanelUI;
 
     private void Start()
     {
